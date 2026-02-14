@@ -1,0 +1,3 @@
+[submodule "Engine/Source/Programs/Moonquake"]
+	path = Engine/Source/Programs/Moonquake
+	url = https://github.com/CrescentEngine/Moonquake

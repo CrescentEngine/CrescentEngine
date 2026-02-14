@@ -1,0 +1,109 @@
+# Copyright (C) 2026 ychgen, all rights reserved.
+DeclVersion("1.1.0");
+DeclRoot("CrescentEngine")
+{
+	Configurations = [ "Development", "DevelopmentEditor", "Preview", "Shipping" ];
+	Architectures  = [ "x86", "x64", "ARM64" ];
+	Platforms      = [ "Windows", "Linux" ];
+	Modules =
+	[
+		"Core",
+		"Game"
+	];
+	MainModule = "Game";
+};
+DeclSchema("EngineModule")
+{
+	LanguageStandard = "Cpp17";
+	RootSourcePaths = [ "Public", "Private" ];
+	ExposedIncludePaths = [ "Public" ];
+	
+	# All modules must link against Root, except Root itself of course.
+	WhenNot("{Module.Name}", "Core")
+	{
+		Linkages += "Core";
+	};
+	
+	When("{BuildOrder.Configuration}", "*Editor")
+	{
+		Definitions += "WITH_EDITOR";
+		OutputType = "DynamicLibrary";
+	};
+	WhenNot("{BuildOrder.Configuration}", "*Editor")
+	{
+		OutputType = "StaticLibrary";
+	};
+	
+	When("{BuildOrder.Configuration", "Development*")
+	{
+		Definitions +=
+		[
+			"CE_DEVELOPMENT",
+			"CE_TEST_BUILD"
+		];
+		
+		RuntimeLibraries = "UseDebug";
+		bDebugSymbols = "Yes";
+		Optimization = "Off";
+	};
+	When("{BuildOrder.Configuration}", "Preview*")
+	{
+		Definitions += "CE_TEST_BUILD";
+	};
+	WhenAny("{BuildOrder.Configuration}", [ "Preview*", "Shipping*" ])
+	{
+		RuntimeLibraries = "UseRelease";
+		Optimization = "Fastest";
+		bDebugSymbols = "No";
+	};
+	When("{BuildOrder.Configuration}", "Shipping")
+	{
+		Definitions += "CE_SHIPPING";
+	};
+	
+	When("{BuildOrder.Platform}", "Windows")
+	{
+		Definitions +=
+		[
+			"CE_PLATFORM_WINDOWS",
+			"CE_STABLE_PLATFORM",
+			
+			"_CRT_SECURE_NO_WARNINGS"
+		];
+		Libraries += [ "kernel32.lib", "user32.lib", "gdi32.lib", "advapi32.lib", "ws2_32.lib" ];
+	};
+	When("{BuildOrder.Platform}", "Linux")
+	{
+		Definitions += [ "CE_PLATFORM_LINUX", "CE_EXPERIMENTAL_PLATFORM" ];
+	};
+	
+	WhenAny("{BuildOrder.Architecture}", [ "*32", "*86" ])
+	{
+		Definitions += "CE_ARCH_BITNESS=32"
+	};
+	When("{BuildOrder.Architecture}", "*64")
+	{
+		Definitions += "CE_ARCH_BITNESS=64"
+	};
+	When("{BuildOrder.Architecture}", "x86")
+	{
+		Definitions += "CE_ARCH_X86";
+	};
+	When("{BuildOrder.Architecture}", "x64")
+	{
+		Definitions += "CE_ARCH_X64";
+	};
+	When("{BuildOrder.Architecture}", "ARM64")
+	{
+		Definitions += "CE_ARCH_ARM64";
+	};
+	
+	Defer()
+	{
+		OutputName          ?= "CE-{Module.Name}";
+		OutputPath          ?= "{Root.Path}/Binaries/{BuildOrder.Platform}/{BuildOrder.Configuration}-{BuildOrder.Architecture}/{Module.Name}";
+		IntermediatePath    ?= "{Root.Path}/Binaries/{BuildOrder.Platform}/{BuildOrder.Configuration}-{BuildOrder.Architecture}/{Module.Name}/Intermediate";
+	};
+};
+Include("Source/Runtime/Core");
+Include("Source/Runtime/Game");

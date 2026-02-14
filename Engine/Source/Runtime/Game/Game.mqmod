@@ -1,0 +1,13 @@
+# Copyright (C) 2026 ychgen, all rights reserved.
+DeclModule("Game", "EngineModule")
+{
+	OutputType = "ConsoleExecutable";
+	
+	When("{BuildOrder.Configuration}", "Shipping")
+	{
+		When("{BuildOrder.Platform}", "Windows")
+		{
+			OutputType = "WindowedExecutable";
+		};
+	};
+};

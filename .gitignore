@@ -1,0 +1,13 @@
+# IDE/Code Editor
+.vs/
+.vscode/
+
+# Binary Outputs
+Binaries/
+
+# Log Outputs
+*.log
+
+# Generated Project Files
+*.sln*
+*.vcxproj*
