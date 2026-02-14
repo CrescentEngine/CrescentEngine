@@ -7,21 +7,33 @@ DeclRoot("CrescentEngine")
 	Platforms      = [ "Windows", "Linux" ];
 	Modules =
 	[
+		"Moonshine",
+
 		"Core",
 		"Game"
 	];
 	MainModule = "Game";
+
+	BuildCommand   = "\"{Environment.CRESCENT_PATH}/Engine/Binaries/DotNET/BuildTool/Moonquake.exe\" build -d \"{Environment.CRESCENT_PATH}/Engine\" CrescentEngine {BuildOrder.Configuration}";
+	ReBuildCommand = "\"{Environment.CRESCENT_PATH}/Engine/Binaries/DotNET/BuildTool/Moonquake.exe\" rebuild -d \"{Environment.CRESCENT_PATH}/Engine\" CrescentEngine {BuildOrder.Configuration}";
+	CleanCommand   = "\"{Environment.CRESCENT_PATH}/Engine/Binaries/DotNET/BuildTool/Moonquake.exe\" clean -d \"{Environment.CRESCENT_PATH}/Engine\" CrescentEngine";
 };
 DeclSchema("EngineModule")
 {
 	LanguageStandard = "Cpp17";
 	RootSourcePaths = [ "Public", "Private" ];
 	ExposedIncludePaths = [ "Public" ];
+	IncludePaths = [ "Public" ];
 	
 	# All modules must link against Root, except Root itself of course.
 	WhenNot("{Module.Name}", "Core")
 	{
 		Linkages += "Core";
+		# Every module except Core and Moonshine will depend on Moonshine.
+		WhenNot("{Module.Name}", "Moonshine")
+		{
+			DependsOn += "Moonshine";
+		};
 	};
 	
 	When("{BuildOrder.Configuration}", "*Editor")
@@ -34,7 +46,7 @@ DeclSchema("EngineModule")
 		OutputType = "StaticLibrary";
 	};
 	
-	When("{BuildOrder.Configuration", "Development*")
+	When("{BuildOrder.Configuration}", "Development*")
 	{
 		Definitions +=
 		[
@@ -101,9 +113,25 @@ DeclSchema("EngineModule")
 	Defer()
 	{
 		OutputName          ?= "CE-{Module.Name}";
-		OutputPath          ?= "{Root.Path}/Binaries/{BuildOrder.Platform}/{BuildOrder.Configuration}-{BuildOrder.Architecture}/{Module.Name}";
-		IntermediatePath    ?= "{Root.Path}/Binaries/{BuildOrder.Platform}/{BuildOrder.Configuration}-{BuildOrder.Architecture}/{Module.Name}/Intermediate";
+		OutputPath          ?= "{Root.Path}/Binaries/{BuildOrder.Platform}/{BuildOrder.Configuration}-{BuildOrder.Architecture}";
+		IntermediatePath    ?= "{Module.Path}/Intermediate/{BuildOrder.Configuration}-{BuildOrder.Architecture}/Build/{BuildOrder.Platform}";
+
+		# Invoke HeaderTool to generate header files.
+		WhenNot("{Module.Name}", "Moonshine")
+		{
+			# InvokeExec() populates platform-specific executable file extension if needed.
+			# SystemCall() doesn't do that.
+			InvokeExec
+			(
+				"{Root.Path}/Binaries/{BuildOrder.Platform}/{BuildOrder.Configuration}-{BuildOrder.Architecture}/{Module.Name}/Moonshine/Moonshine",
+				"Continue",
+				[
+					"{Module.Path}/{Module.Name}.mqmod"
+				]
+			);
+		};
 	};
 };
+Include("Source/Programs/Moonshine");
 Include("Source/Runtime/Core");
 Include("Source/Runtime/Game");

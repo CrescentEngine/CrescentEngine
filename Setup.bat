@@ -1,4 +1,5 @@
 @echo off
+setlocal enabledelayedexpansion
 
 set MESSAGE_NOT_IN_ENGINE_ROOT=This script must be run directly from the root directory of the engine.
 
@@ -18,21 +19,23 @@ if not exist Engine\Build\Scripts\Windows\BuildTool.bat (
 	goto Quit
 )
 
-net session >nul 2>&1
-if %errorLevel% neq 0 (
-	echo This script must be run with administrative privileges.
-	goto Quit
+if not defined CRESCENT_PATH (
+	net session >nul 2>&1
+	if %errorLevel% neq 0 (
+		echo This script must be run with administrative privileges when the CRESCENT_PATH environment is unset.
+			goto Quit
+	)
+	echo Setting system environment variable CRESCENT_PATH...
+	set "PATH_SLASH=!CD:\=/!"
+	setx /M CRESCENT_PATH "!PATH_SLASH!"
 )
-
-echo Setting system environment variable CRESCENT_PATH...
-setx /M CRESCENT_PATH %CD%
 
 :: Build Moonquake
 echo Building Moonquake (Build Tool)...
-call .\Engine\Build\Scripts\Windows\BuildTool.bat
+call .\Engine\Build\Scripts\Windows\BuildTool.bat NoPause
 
 :: Generate Project Files
-call .\Engine\Build\Scripts\Windows\GenerateProjectFiles.bat
+call .\Engine\Build\Scripts\Windows\GenerateProjectFiles.bat NoPause
 
 :Quit
 pause

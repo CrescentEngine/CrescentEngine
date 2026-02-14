@@ -1,0 +1,6 @@
+# Copyright (C) 2026 ychgen, all rights reserved.
+DeclModule("Moonshine", "EngineModule")
+{
+    OutputName = "{Module.Name}";
+    OutputType = "ConsoleExecutable";
+};

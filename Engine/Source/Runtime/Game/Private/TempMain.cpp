@@ -6,5 +6,6 @@
 int main(int ArgC, char** ArgV)
 {
     std::cout << "Hello Crescent Game!\n";
+    std::cin.get();
     return 0;
 }

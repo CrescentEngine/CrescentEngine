@@ -4,6 +4,7 @@
 
 # Binary Outputs
 Binaries/
+Intermediate/
 
 # Log Outputs
 *.log

@@ -7,4 +7,8 @@ if %ERRORLEVEL% neq 0 (
 )
 
 dotnet publish "%CRESCENT_PATH%/Engine/Source/Programs/Moonquake" -c Release -r win-x64 --self-contained true -o "%CRESCENT_PATH%/Engine/Binaries/DotNET/BuildTool"
+:Quit
+if "%1"=="NoPause" goto SkipPause
+pause
+:SkipPause
 exit /B

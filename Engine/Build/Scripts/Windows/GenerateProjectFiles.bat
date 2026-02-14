@@ -8,5 +8,8 @@ if not exist %BUILD_TOOL% (
 
 echo Generating project files...
 call %BUILD_TOOL% generate -d VisualStudio %CRESCENT_PATH%\Engine CrescentEngine
+:Quit
+if "%1"=="NoPause" goto SkipPause
 pause
+:SkipPause
 exit /B
