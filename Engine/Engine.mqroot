@@ -38,7 +38,7 @@ DeclSchema("EngineModule")
 	
 	When("{BuildOrder.Configuration}", "*Editor")
 	{
-		Definitions += "WITH_EDITOR";
+		Definitions += "CC_WITH_EDITOR";
 		OutputType = "DynamicLibrary";
 	};
 	WhenNot("{BuildOrder.Configuration}", "*Editor")
@@ -50,8 +50,8 @@ DeclSchema("EngineModule")
 	{
 		Definitions +=
 		[
-			"CE_DEVELOPMENT",
-			"CE_TEST_BUILD"
+			"CC_DEVELOPMENT",
+			"CC_TEST_BUILD"
 		];
 		
 		RuntimeLibraries = "UseDebug";
@@ -60,7 +60,7 @@ DeclSchema("EngineModule")
 	};
 	When("{BuildOrder.Configuration}", "Preview*")
 	{
-		Definitions += "CE_TEST_BUILD";
+		Definitions += "CC_TEST_BUILD";
 	};
 	WhenAny("{BuildOrder.Configuration}", [ "Preview*", "Shipping*" ])
 	{
@@ -70,15 +70,16 @@ DeclSchema("EngineModule")
 	};
 	When("{BuildOrder.Configuration}", "Shipping")
 	{
-		Definitions += "CE_SHIPPING";
+		Definitions += "CC_SHIPPING";
 	};
 	
 	When("{BuildOrder.Platform}", "Windows")
 	{
 		Definitions +=
 		[
-			"CE_PLATFORM_WINDOWS",
-			"CE_STABLE_PLATFORM",
+			"CC_PLATFORM_WINDOWS",
+			"CC_STABLE_PLATFORM",
+			"CC_PLATFORM_ID=Windows",
 			
 			"_CRT_SECURE_NO_WARNINGS"
 		];
@@ -86,33 +87,42 @@ DeclSchema("EngineModule")
 	};
 	When("{BuildOrder.Platform}", "Linux")
 	{
-		Definitions += [ "CE_PLATFORM_LINUX", "CE_EXPERIMENTAL_PLATFORM" ];
+		Definitions +=
+		[
+			"CC_PLATFORM_LINUX",
+			"CC_EXPERIMENTAL_PLATFORM",
+			"CC_PLATFORM_ID=Linux"
+		];
 	};
 	
 	WhenAny("{BuildOrder.Architecture}", [ "*32", "*86" ])
 	{
-		Definitions += "CE_ARCH_BITNESS=32"
+		Definitions += "CC_ARCH_BITNESS=32"
 	};
 	When("{BuildOrder.Architecture}", "*64")
 	{
-		Definitions += "CE_ARCH_BITNESS=64"
+		Definitions += "CC_ARCH_BITNESS=64"
 	};
 	When("{BuildOrder.Architecture}", "x86")
 	{
-		Definitions += "CE_ARCH_X86";
+		Definitions += "CC_ARCH_X86";
 	};
 	When("{BuildOrder.Architecture}", "x64")
 	{
-		Definitions += "CE_ARCH_X64";
+		Definitions += "CC_ARCH_X64";
 	};
 	When("{BuildOrder.Architecture}", "ARM64")
 	{
-		Definitions += "CE_ARCH_ARM64";
+		Definitions += "CC_ARCH_ARM64";
 	};
 	
 	Defer()
 	{
-		OutputName          ?= "CE-{Module.Name}";
+		When("{BuildOrder.Configuration}", "*Editor")
+		{
+			OutputName ?= "CCEditor-{Module.Name}";
+		};
+
 		OutputPath          ?= "{Root.Path}/Binaries/{BuildOrder.Platform}/{BuildOrder.Configuration}-{BuildOrder.Architecture}";
 		IntermediatePath    ?= "{Module.Path}/Intermediate/{BuildOrder.Configuration}-{BuildOrder.Architecture}/Build/{BuildOrder.Platform}";
 
