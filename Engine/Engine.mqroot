@@ -20,7 +20,7 @@ DeclRoot("CrescentEngine")
 };
 DeclSchema("EngineModule")
 {
-	LanguageStandard = "Cpp17";
+	LanguageStandard = "Cpp20";
 	RootSourcePaths = [ "Public", "Private" ];
 	ExposedIncludePaths = [ "Public" ];
 	IncludePaths = [ "Public" ];

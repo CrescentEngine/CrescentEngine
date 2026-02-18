@@ -5,6 +5,8 @@
 // The core language lacks this, however <stdint.h> does provide standard ones. They are just not fundamental types.
 #include <cstdint>
 
+#define PLATFORM_HAS_NATIVE_INT128_TYPE 0
+
 struct FVanillaPlatformTypes
 {
 	typedef int8_t   int8;

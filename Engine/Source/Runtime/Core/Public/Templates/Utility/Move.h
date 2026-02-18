@@ -5,7 +5,7 @@
 #include "Templates/TypeTraits/RemoveReference.h"
 
 template <typename T>
-FORCEINLINE typename TRemoveReference<T>::Type&& Move(T&& In)
+FORCEINLINE typename TRemoveReference<T>::Type&& Move(T&& In) noexcept
 {
 	return static_cast<typename TRemoveReference<T>::Type&&>(In);
 }

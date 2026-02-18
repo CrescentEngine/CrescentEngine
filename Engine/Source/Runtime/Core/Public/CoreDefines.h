@@ -9,11 +9,20 @@
 #define CC_PLATFORM_NAME CC_STRINGIZE(CR_PLATFORM_ID)
 #define CC_RESOLVE_PLATFORM_TYPE(Prefix, Type) CC_CONCAT(Prefix, CC_CONCAT(CR_PLATFORM_ID, Type))
 
-// FORCEINLINE
-#if __clang__ || __GNUC__
-	#define FORCEINLINE inline __attribute__((always_inline))
-#elif _MSC_VER
+#if CC_COMPILER_MSVC
 	#define FORCEINLINE __forceinline
+	#define NORETURN    __declspec(noreturn)
+	#define RESTRICT    __restrict
+#elif CC_COMPILER_CLANG || CC_COMPILER_GCC
+	#define FORCEINLINE inline __attribute__((always_inline))
+	#define NORETURN           __attribute__((noreturn))
+	#define RESTRICT           __restrict__
 #else
 	#define FORCEINLINE inline
+	#if CC_LANGUAGE_STANDARD >= 2011
+		#define NORETURN    [[noreturn]]
+	#else
+		#define NORETURN
+	#endif
+	#define RESTRICT
 #endif

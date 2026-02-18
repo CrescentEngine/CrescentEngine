@@ -1,8 +1,6 @@
 // Copyright (C) 2026 ychgen, all rights reserved.
 #pragma once
 
-#include "Vanilla/VanillaPlatform.h"
-
 struct FWindowsPlatformTypes : public FVanillaPlatformTypes
 {
 	typedef   signed __int8  int8;
@@ -16,11 +14,11 @@ struct FWindowsPlatformTypes : public FVanillaPlatformTypes
 	typedef unsigned __int64 uint64;
 
 	#if CC_ARCH_BITNESS == 32
-		typedef   signed __int32 isize;
-		typedef unsigned __int32 usize;
+		typedef   signed __int32 sint_t;
+		typedef unsigned __int32 uint_t;
 	#elif CC_ARCH_BITNESS == 64
-		typedef   signed __int64 isize;
-		typedef unsigned __int64 usize;
+		typedef   signed __int64 sint_t;
+		typedef unsigned __int64 uint_t;
 	#else
 		#error Invalid platform bitness
 	#endif

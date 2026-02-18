@@ -8,8 +8,8 @@ struct TIntegralConstant
 	typedef TIntegralConstant Type;
 	static constexpr T Value = Val;
 
-	static constexpr operator T() const noexcept { return Val; }
-	static constexpr T operator()() const noexcept { return Val; }
+	constexpr operator T() const noexcept { return Val; }
+	constexpr T operator()() const noexcept { return Val; }
 };
 
 template <bool Value>
