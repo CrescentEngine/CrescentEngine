@@ -54,3 +54,6 @@ struct TMakeUnsigned<const volatile T, true> { typedef const volatile typename T
 
 #undef MAKE_UNSIGNED_BASE
 #undef MAKE_UNSIGNED_CHAR
+
+template <typename T>
+using TMakeUnsigned_t = typename TMakeUnsigned<T>::Type;

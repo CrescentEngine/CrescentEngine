@@ -29,5 +29,5 @@ struct FVanillaPlatformTypes
 		#error Invalid platform bitness
 	#endif
 
-	typedef decltype(nullptr) TypeOfNullPtr;
+	typedef decltype(nullptr) TypeOfNullptr;
 };

@@ -18,3 +18,6 @@ struct TRemoveReference<T&&>
 {
 	typedef T Type;
 };
+
+template <typename T>
+using TRemoveReference_t = typename TRemoveReference<T>::Type;

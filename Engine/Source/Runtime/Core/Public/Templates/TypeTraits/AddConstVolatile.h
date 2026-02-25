@@ -18,3 +18,12 @@ struct TAddConstVolatile
 {
 	typedef const volatile T Type;
 };
+
+template <typename T>
+using TAddConst_t = typename TAddConst<T>::Type;
+
+template <typename T>
+using TAddVolatile_t = typename TAddVolatile<T>::Type;
+
+template <typename T>
+using TAddConstVolatile_t = typename TAddConstVolatile<T>::Type;

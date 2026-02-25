@@ -1,4 +1,5 @@
 // Copyright (C) 2026 ychgen, all rights reserved.
+
 #pragma once
 
 #define CC_CONCAT_INNER(L, R) L##R

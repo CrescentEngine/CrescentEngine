@@ -17,3 +17,6 @@ template <typename T>
 struct TIsPointer : TIsConstVolatileUnqualifiedPointer<typename TRemoveConstVolatile<T>::Type>
 {
 };
+
+template <typename T>
+inline constexpr bool TIsPointer_v = TIsPointer<T>::Value;

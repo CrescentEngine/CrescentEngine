@@ -25,3 +25,9 @@ template <typename T>
 struct TAddRValueReference : decltype(CCAddReference_Private::AddRValueReference<T>(0))
 {
 };
+
+template <typename T>
+using TAddLValueReference_t = typename TAddLValueReference<T>::Type;
+
+template <typename T>
+using TAddRValueReference_t = typename TAddRValueReference<T>::Type;

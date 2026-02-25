@@ -54,3 +54,6 @@ struct TMakeSigned<const volatile T, true> { typedef const volatile typename TMa
 
 #undef MAKE_SIGNED_BASE
 #undef MAKE_SIGNED_CHAR
+
+template <typename T>
+using TMakeSigned_t = typename TMakeSigned<T>::Type;

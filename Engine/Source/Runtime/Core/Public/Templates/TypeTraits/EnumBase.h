@@ -16,3 +16,6 @@ struct TEnumBase<T, true>
 {
 	typedef __underlying_type(T) Type;
 };
+
+template <typename T>
+using TEnumBase_t = typename TEnumBase<T>::Type;

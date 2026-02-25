@@ -28,3 +28,6 @@ struct TSelectSignedInt<8>
 {
 	typedef int64 Type;
 };
+
+template <uint_t N>
+using TSelectSignedInt_t = typename TSelectSignedInt<N>::Type;

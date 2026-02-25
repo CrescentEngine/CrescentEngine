@@ -3,4 +3,5 @@
 
 #include "Templates/TypeTraits/EnableIf.h"
 
-#define CC_REQUIRES(...) , typename TEnableIf<__VA_ARGS__, int>::Type = 0
+// Use in angular bracket scope
+#define CC_REQUIRES(...) , typename TEnableIf<(__VA_ARGS__), int>::Type = 0

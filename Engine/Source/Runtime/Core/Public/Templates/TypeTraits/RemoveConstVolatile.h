@@ -43,3 +43,12 @@ struct TRemoveConstVolatile<const volatile T>
 {
 	typedef T Type;
 };
+
+template <typename T>
+using TRemoveConst_t = typename TRemoveConst<T>::Type;
+
+template <typename T>
+using TRemoveVolatile_t = typename TRemoveVolatile<T>::Type;
+
+template <typename T>
+using TRemoveConstVolatile_t = typename TRemoveConstVolatile<T>::Type;

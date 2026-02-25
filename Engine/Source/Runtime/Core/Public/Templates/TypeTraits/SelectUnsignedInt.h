@@ -28,3 +28,6 @@ struct TSelectUnsignedInt<8>
 {
 	typedef uint64 Type;
 };
+
+template <uint_t N>
+using TSelectUnsignedInt_t = typename TSelectUnsignedInt<N>::Type;

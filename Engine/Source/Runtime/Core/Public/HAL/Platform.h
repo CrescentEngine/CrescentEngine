@@ -24,4 +24,4 @@ typedef FPlatformTypes::uint64 uint64;
 typedef FPlatformTypes::isize  sint_t;
 typedef FPlatformTypes::usize  uint_t;
 
-typedef FPlatformTypes::TypeOfNullPtr TypeOfNullPtr;
+typedef FPlatformTypes::TypeOfNullptr TypeOfNullptr;

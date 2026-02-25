@@ -6,3 +6,6 @@ struct TTypeIdentity
 {
 	typedef T Type;
 };
+
+template <typename T>
+using TTypeIdentity_t = typename TTypeIdentity<T>::Type;

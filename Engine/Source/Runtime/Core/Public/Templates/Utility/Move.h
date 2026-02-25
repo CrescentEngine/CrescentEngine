@@ -1,11 +1,12 @@
 // Copyright (C) 2026 ychgen, all rights reserved.
+
 #pragma once
 
 #include "CoreDefines.h"
 #include "Templates/TypeTraits/RemoveReference.h"
 
 template <typename T>
-FORCEINLINE typename TRemoveReference<T>::Type&& Move(T&& In) noexcept
+FORCEINLINE TRemoveReference_t<T>&& Move(T&& In) noexcept
 {
-	return static_cast<typename TRemoveReference<T>::Type&&>(In);
+	return static_cast<TRemoveReference_t<T>&&>(In);
 }

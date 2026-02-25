@@ -11,3 +11,6 @@ template <
 struct TIsUnsigned : TBoolConstant<T(0) < T(-1)>
 {
 };
+
+template <typename T>
+inline constexpr bool TIsUnsigned_v = TIsUnsigned<T>::Value;

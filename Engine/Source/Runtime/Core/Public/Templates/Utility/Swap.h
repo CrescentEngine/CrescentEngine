@@ -1,4 +1,5 @@
 // Copyright (C) 2026 ychgen, all rights reserved.
+
 #pragma once
 
 #include "HAL/Platform.h"
@@ -11,7 +12,7 @@
 template
 <
 	typename T
-	CC_REQUIRES(TIsMoveConstructible<T>::Value && TIsMoveAssignable<T>::Value)
+	CC_REQUIRES(TIsMoveConstructible_v<T> && TIsMoveAssignable_v<T>)
 >
 constexpr FORCEINLINE void Swap(T& LHS, T& RHS)
 {
@@ -24,12 +25,15 @@ template
 <
 	typename T,
 	uint_t   N
-	CC_REQUIRES(TIsMoveConstructible<T>::Value && TIsMoveAssignable<T>::Value)
+	CC_REQUIRES(TIsMoveConstructible_v<T> && TIsMoveAssignable_v<T>)
 >
 constexpr FORCEINLINE void Swap(T(&LHS)[N], T(&RHS)[N])
 {
-	for (const T* LeftCur = LHS, const T* LeftEnd = LHS + N, const T* RightCur = RHS;
-		 LeftCur != LeftEnd; LeftCur++, RightCur++)
+	const T* LeftCur  = LHS;
+	const T* LeftEnd  = LHS + N;
+	const T* RightCur = RHS;
+
+	for (; LeftCur != LeftEnd; LeftCur++, RightCur++)
 	{
 		Swap(*LeftCur, *RightCur);
 	}

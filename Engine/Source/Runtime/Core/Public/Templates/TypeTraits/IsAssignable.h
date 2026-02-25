@@ -1,4 +1,5 @@
 // Copyright (C) 2026 ychgen, all rights reserved.
+
 #pragma once
 
 #include "Templates/TypeTraits/IntegralConstant.h"
@@ -26,54 +27,63 @@ struct TIsNoThrowAssignable : TBoolConstant<__is_nothrow_assignable(To, From)>
 {
 };
 
+template <typename To, typename From>
+inline constexpr bool TIsAssignable_v = TIsAssignable<To, From>::Value;
+
+template <typename To, typename From>
+inline constexpr bool TIsTriviallyAssignable_v = TIsTriviallyAssignable<To, From>::Value;
+
+template <typename To, typename From>
+inline constexpr bool TIsNoThrowAssignable_v = TIsNoThrowAssignable<To, From>::Value;
+
 // Copy assignment
 
 template <typename T>
-struct TIsCopyAssignable : TIsAssignable<
-	typename TAddLValueReference<T>::Type,
-	typename TAddConst<typename TAddLValueReference<T>::Type>::Type
->
+struct TIsCopyAssignable : TIsAssignable<TAddLValueReference_t<T>, TAddConst_t<TAddLValueReference_t<T>>>
 {
 };
 
 template <typename T>
-struct TIsTriviallyCopyAssignable : TIsTriviallyAssignable<
-	typename TAddLValueReference<T>::Type,
-	typename TAddConst<typename TAddLValueReference<T>::Type>::Type
->
+struct TIsTriviallyCopyAssignable : TIsTriviallyAssignable<TAddLValueReference_t<T>, TAddConst_t<TAddLValueReference_t<T>>>
 {
 };
 
 template <typename T>
-struct TIsNoThrowCopyAssignable : TIsNoThrowAssignable<
-	typename TAddLValueReference<T>::Type,
-	typename TAddConst<typename TAddLValueReference<T>::Type>::Type
->
+struct TIsNoThrowCopyAssignable : TIsNoThrowAssignable<TAddLValueReference_t<T>, TAddConst_t<TAddLValueReference_t<T>>>
 {
 };
+
+template <typename T>
+inline constexpr bool TIsCopyAssignable_v = TIsCopyAssignable<T>::Value;
+
+template <typename T>
+inline constexpr bool TIsTriviallyCopyAssignable_v = TIsTriviallyCopyAssignable<T>::Value;
+
+template <typename T>
+inline constexpr bool TIsNoThrowCopyAssignable_v = TIsNoThrowCopyAssignable<T>::Value;
 
 // Move assignment
 
 template <typename T>
-struct TIsMoveAssignable : TIsAssignable<
-	typename TAddLValueReference<T>::Type,
-	typename TAddRValueReference<T>::Type
->
+struct TIsMoveAssignable : TIsAssignable<TAddLValueReference_t<T>, TAddRValueReference_t<T>>
 {
 };
 
 template <typename T>
-struct TIsTriviallyMoveAssignable : TIsTriviallyAssignable<
-	typename TAddLValueReference<T>::Type,
-	typename TAddRValueReference<T>::Type
->
+struct TIsTriviallyMoveAssignable : TIsTriviallyAssignable<TAddLValueReference_t<T>, TAddRValueReference_t<T>>
 {
 };
 
 template <typename T>
-struct TIsNoThrowMoveAssignable : TIsNoThrowAssignable<
-	typename TAddLValueReference<T>::Type,
-	typename TAddRValueReference<T>::Type
->
+struct TIsNoThrowMoveAssignable : TIsNoThrowAssignable<TAddLValueReference_t<T>, TAddRValueReference_t<T>>
 {
 };
+
+template <typename T>
+inline constexpr bool TIsMoveAssignable_v = TIsMoveAssignable<T>::Value;
+
+template <typename T>
+inline constexpr bool TIsTriviallyMoveAssignable_v = TIsTriviallyMoveAssignable<T>::Value;
+
+template <typename T>
+inline constexpr bool TIsNoThrowMoveAssignable_v = TIsNoThrowMoveAssignable<T>::Value;

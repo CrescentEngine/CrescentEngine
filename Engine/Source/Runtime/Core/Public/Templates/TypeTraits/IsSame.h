@@ -11,3 +11,6 @@ template <typename T>
 struct TIsSame<T, T> : FTrueType
 {
 };
+
+template <typename T, typename U>
+inline constexpr bool TIsSame_v = TIsSame<T, U>::Value;

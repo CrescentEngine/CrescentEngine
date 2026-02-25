@@ -12,3 +12,6 @@ struct TConditional<false, TrueType, FalseType>
 {
 	typedef FalseType Type;
 };
+
+template <bool Expression, typename TrueType, typename FalseType>
+using TConditional_t = typename TConditional<Expression, TrueType, FalseType>::Type;

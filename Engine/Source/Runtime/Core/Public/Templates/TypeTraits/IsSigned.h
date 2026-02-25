@@ -11,3 +11,6 @@ template <
 struct TIsSigned : TBoolConstant<T(-1) < T(0)>
 {
 };
+
+template <typename T>
+inline constexpr bool TIsSigned_v = TIsSigned<T>::Value;
