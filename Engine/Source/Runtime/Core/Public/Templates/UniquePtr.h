@@ -50,7 +50,8 @@ namespace CCUniquePtr_Private
 
 	template <typename T, typename Del>
 	struct TPointerType<T, Del, TVoid<typename TRemoveReference_t<Del>::PointerType>> // If type doesn't exist in TVoid<>, it's a substitution error
-																				  // which makes it fall back to the primary template and use T*
+																					  // which makes it fall back to the primary template and use T*
+																					  // If type exists partial specialization wins and Del::PointerType is used.
 	{
 		typedef	typename TRemoveReference_t<Del>::PointerType Type;
 	};
