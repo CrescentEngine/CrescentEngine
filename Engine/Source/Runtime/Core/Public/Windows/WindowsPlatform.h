@@ -22,5 +22,8 @@ struct FWindowsPlatformTypes : public FVanillaPlatformTypes
 	#else
 		#error Invalid platform bitness
 	#endif
+
+	typedef CCPlatform_Private::TPrimitiveSelectBySize_t<  signed __int8,   signed __int16,   signed __int32,   signed __int64, CC_ARCH_BITNESS/8> PTRINT;
+	typedef CCPlatform_Private::TPrimitiveSelectBySize_t<unsigned __int8, unsigned __int16, unsigned __int32, unsigned __int64, CC_ARCH_BITNESS/8> UPTRINT;
 };
 typedef FWindowsPlatformTypes FPlatformTypes;

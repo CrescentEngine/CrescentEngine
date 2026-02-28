@@ -21,7 +21,10 @@ typedef FPlatformTypes::uint16 uint16;
 typedef FPlatformTypes::uint32 uint32;
 typedef FPlatformTypes::uint64 uint64;
 
-typedef FPlatformTypes::isize  sint_t;
-typedef FPlatformTypes::usize  uint_t;
+typedef FPlatformTypes::sint_t  sint_t;
+typedef FPlatformTypes::uint_t  uint_t;
+
+typedef FPlatformTypes::PTRINT  PTRINT;
+typedef FPlatformTypes::UPTRINT UPTRINT;
 
 typedef FPlatformTypes::TypeOfNullptr TypeOfNullptr;

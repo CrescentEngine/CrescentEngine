@@ -8,7 +8,7 @@
 
 #include <intrin.h> // for _Interlocked* compiler intrinsics
 
-struct CORE_API FWindowsPlatformAtomics : public FVanillaPlatformAtomics
+struct FWindowsPlatformAtomics : public FVanillaPlatformAtomics
 {
 	/** MSVC specific. Instrinsics explicitly need these types as is. */
 	typedef char      SIZE8_;  static_assert(sizeof(SIZE8_)  == sizeof(int8),  "FWindowsPlatformAtomics:  8-bit atomic abstraction type mismatch.");
@@ -101,7 +101,7 @@ struct CORE_API FWindowsPlatformAtomics : public FVanillaPlatformAtomics
 		while (true)
 		{
 			int64 Prev = *Addend;
-			if (_InterlockedCompareExchange64(InValue, Prev + Value, Prev) == Prev)
+			if (_InterlockedCompareExchange64(Addend, Prev + Value, Prev) == Prev)
 			{
 				return Prev + Value;
 			}

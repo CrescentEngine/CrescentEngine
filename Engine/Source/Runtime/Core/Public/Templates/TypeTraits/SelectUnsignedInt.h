@@ -6,7 +6,6 @@
 template <uint_t N>
 struct TSelectUnsignedInt
 {
-	static_assert("Invalid integral type size.");
 };
 template <>
 struct TSelectUnsignedInt<1>
