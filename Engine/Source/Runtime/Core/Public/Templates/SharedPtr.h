@@ -608,7 +608,7 @@ template <typename T, bool bThreadSafe = false, typename U>
 FORCEINLINE TSharedPtr<T, bThreadSafe> StaticPointerCast(TSharedPtr<U, bThreadSafe>&& Ptr)
 {
 	// Aliasing ctor is used (move overload exists)
-	return TSharedPtr<T, bThreadSafe>(Ptr, static_cast<typename TSharedPtr<T, bThreadSafe>::ElementType*>(Ptr.Get()));
+	return TSharedPtr<T, bThreadSafe>(Move(Ptr), static_cast<typename TSharedPtr<T, bThreadSafe>::ElementType*>(Ptr.Get()));
 }
 
 template <typename T, bool bThreadSafe = false, typename U>
@@ -622,7 +622,7 @@ template <typename T, bool bThreadSafe = false, typename U>
 FORCEINLINE TSharedPtr<T, bThreadSafe> DynamicPointerCast(TSharedPtr<U, bThreadSafe>&& Ptr)
 {
 	auto Result = dynamic_cast<typename TSharedPtr<T, bThreadSafe>::ElementType*>(Ptr.Get());
-	return Result ? TSharedPtr<T, bThreadSafe>(Ptr, Result) : TSharedPtr<T, bThreadSafe>();
+	return Result ? TSharedPtr<T, bThreadSafe>(Move(Ptr), Result) : TSharedPtr<T, bThreadSafe>();
 }
 
 template <typename T, bool bThreadSafe = false, typename U>
@@ -636,7 +636,7 @@ template <typename T, bool bThreadSafe = false, typename U>
 FORCEINLINE TSharedPtr<T, bThreadSafe> ConstPointerCast(TSharedPtr<U, bThreadSafe>&& Ptr)
 {
 	// Aliasing ctor is used (move overload exists)
-	return TSharedPtr<T, bThreadSafe>(Ptr, const_cast<typename TSharedPtr<T, bThreadSafe>::ElementType*>(Ptr.Get()));
+	return TSharedPtr<T, bThreadSafe>(Move(Ptr), const_cast<typename TSharedPtr<T, bThreadSafe>::ElementType*>(Ptr.Get()));
 }
 
 template <typename T, bool bThreadSafe = false, typename U>
@@ -650,7 +650,7 @@ template <typename T, bool bThreadSafe = false, typename U>
 FORCEINLINE TSharedPtr<T, bThreadSafe> ReinterpretPointerCast(TSharedPtr<U, bThreadSafe>&& Ptr)
 {
 	// Aliasing ctor is used (move overload exists)
-	return TSharedPtr<T, bThreadSafe>(Ptr, reinterpret_cast<typename TSharedPtr<T, bThreadSafe>::ElementType*>(Ptr.Get()));
+	return TSharedPtr<T, bThreadSafe>(Move(Ptr), reinterpret_cast<typename TSharedPtr<T, bThreadSafe>::ElementType*>(Ptr.Get()));
 }
 
 // Comparison operators between two SPs
