@@ -9,7 +9,7 @@
 #include "Templates/TypeTraits/IsSame.h"
 
 template <typename T>
-struct TIsNullPointer : TIsSame<TypeOfNullptr, typename TRemoveConstVolatile<T>::Type>
+struct TIsNullPointer : TIsSame<TypeOfNullptr, typename TRemoveConstVolatile<T>::Type>::Type
 {
 };
 

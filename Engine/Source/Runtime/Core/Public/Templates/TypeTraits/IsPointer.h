@@ -14,7 +14,7 @@ struct TIsConstVolatileUnqualifiedPointer<T*> : FTrueType
 };
 
 template <typename T>
-struct TIsPointer : TIsConstVolatileUnqualifiedPointer<typename TRemoveConstVolatile<T>::Type>
+struct TIsPointer : TIsConstVolatileUnqualifiedPointer<typename TRemoveConstVolatile<T>::Type>::Type
 {
 };
 

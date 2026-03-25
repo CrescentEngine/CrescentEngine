@@ -210,7 +210,7 @@ namespace CCAtomic_Private
 	template <typename T>
 	struct TPointerAtomic : public TArithmeticAtomic<T, PTRINT>
 	{
-		// The reason this type exists is to provide PTRINT\
+		// The reason this type exists is to provide PTRINT
 		// No special behavior needed
 	protected:
 		TPointerAtomic() = default;

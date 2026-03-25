@@ -76,7 +76,7 @@ struct TIsConstVolatileUnqualifiedIntegral<unsigned long long> : FTrueType
 };
 
 template <typename T>
-struct TIsIntegral : TIsConstVolatileUnqualifiedIntegral<TRemoveConstVolatile_t<T>>
+struct TIsIntegral : TIsConstVolatileUnqualifiedIntegral<TRemoveConstVolatile_t<T>>::Type
 {
 };
 

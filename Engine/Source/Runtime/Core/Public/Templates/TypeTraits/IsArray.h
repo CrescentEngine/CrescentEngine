@@ -4,42 +4,23 @@
 
 #include "HAL/Platform.h"
 
-#include "Templates/TypeTraits/IntegralConstant.h"
+#include "Templates/TypeTraits/Bound.h"
 
 template <typename T>
-struct TIsArray : FFalseType
-{
-};
-
-template <typename T>
-struct TIsArray<T[]> : FTrueType
-{
-};
-
-template <typename T, uint_t N>
-struct TIsArray<T[N]> : FTrueType
+struct TIsArray : TBoolConstant<TBound_v<T> != ETypeBound::None>
 {
 };
 
 template <typename T>
-struct TIsBoundedArray : FFalseType
-{
-};
-
-template <typename T, uint_t N>
-struct TIsBoundedArray<T[N]> : FTrueType
+struct TIsBoundedArray : TBoolConstant<TBound_v<T> == ETypeBound::Bounded>
 {
 };
 
 template <typename T>
-struct TIsUnboundedArray : FFalseType
+struct TIsUnboundedArray : TBoolConstant<TBound_v<T> == ETypeBound::Unbounded>
 {
 };
 
-template <typename T>
-struct TIsUnboundedArray<T[]> : FTrueType
-{
-};
 
 template <typename T>
 inline constexpr bool TIsArray_v = TIsArray<T>::Value;

@@ -22,7 +22,7 @@ struct TIsConstVolatileUnqualifiedFloatingPoint<long double> : FTrueType
 };
 
 template <typename T>
-struct TIsFloatingPoint : TIsConstVolatileUnqualifiedFloatingPoint<TRemoveConstVolatile_t<T>>
+struct TIsFloatingPoint : TIsConstVolatileUnqualifiedFloatingPoint<TRemoveConstVolatile_t<T>>::Type
 {
 };
 

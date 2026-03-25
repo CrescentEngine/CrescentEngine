@@ -322,35 +322,37 @@ constexpr FORCEINLINE void Swap(TUniquePtr<T, Deleter>& LHS, TUniquePtr<T, Delet
 	LHS.Swap(RHS);
 }
 
+// CreateUnique implementations
+
 template <typename T, typename... Args, TEnableIf_t<!TIsArray_v<T>, int> = 0>
-constexpr FORCEINLINE TUniquePtr<T> MakeUnique(Args&&... InArgs)
+constexpr FORCEINLINE TUniquePtr<T> CreateUnique(Args&&... InArgs)
 {
 	return TUniquePtr<T>(new T(Forward<Args>(InArgs)...));
 }
 
 template <typename T, TEnableIf_t<TIsUnboundedArray_v<T>, int> = 0>
-constexpr FORCEINLINE TUniquePtr<T> MakeUnique(uint_t N)
+constexpr FORCEINLINE TUniquePtr<T> CreateUnique(uint_t N)
 {
 	return TUniquePtr<T>(new TRemoveExtent_t<T>[N]()); // default constructed N elements
 }
 
 template <typename T, typename... Args, TEnableIf_t<TIsBoundedArray_v<T>, int> = 0>
-constexpr FORCEINLINE void MakeUnique(Args&&...) = delete; // explicitly deleted per standard
+constexpr FORCEINLINE void CreateUnique(Args&&...) = delete; // explicitly deleted per standard
 
 template <typename T, TEnableIf_t<!TIsArray_v<T>, int> = 0>
-constexpr FORCEINLINE TUniquePtr<T> MakeUniqueForOverwrite()
+constexpr FORCEINLINE TUniquePtr<T> CreateUniqueForOverwrite()
 {
-	return TUniquePtr<T>(new T); // default initialized (not explicitly constructed)
+	return TUniquePtr<T>(new T); // (not explicitly constructed)
 }
 
 template <typename T, TEnableIf_t<TIsUnboundedArray_v<T>, int> = 0>
-constexpr FORCEINLINE TUniquePtr<T> MakeUniqueForOverwrite(uint_t N)
+constexpr FORCEINLINE TUniquePtr<T> CreateUniqueForOverwrite(uint_t N)
 {
 	return TUniquePtr<T>(new TRemoveExtent_t<T>[N]); // default initialized N elements
 }
 
 template <typename T, typename... Args, TEnableIf_t<TIsBoundedArray_v<T>, int> = 0>
-constexpr FORCEINLINE void MakeUniqueForOverwrite(Args&&...) = delete; // explicitly deleted per standard
+constexpr FORCEINLINE void CreateUniqueForOverwrite(Args&&...) = delete; // explicitly deleted per standard
 
 template <typename T1, typename D1, typename T2, typename D2>
 constexpr FORCEINLINE bool operator==(const TUniquePtr<T1, D1>& LHS, const TUniquePtr<T2, D2>& RHS)
